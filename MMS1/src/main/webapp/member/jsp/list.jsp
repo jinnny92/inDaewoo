@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="/insertui.do">회원 등록</a>
 <h1>회원 목록</h1>
 <%
 
