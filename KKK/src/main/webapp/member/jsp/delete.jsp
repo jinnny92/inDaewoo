@@ -1,3 +1,5 @@
+<%@page import="kr.co.dw.member.dto.MemberDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,28 +9,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>회원 삭제</h1>
-정말 삭제할래?
-<form action="/delete.do" method="post" id = "form"> 
-<input type="hidden" name = "id" value="${id}">
-</form>
-
-<button onclick="yesDel()">예</button>
-<button onclick="noDel()">아니오</button>
-
+<h1>회원 정보 삭제</h1>
+	<form action="/delete.do" method="post">
+		ID: <input name="id" value="${dto.id}" readonly><br>
+		NAME: <input name="name" value="${dto.name}" readonly><br>
+		AGE: <input name="age" value="${dto.age}" readonly><br>
+		<input type="submit" value="삭제 완료">
 	
-	<script type="text/javascript">
-	function yesDel() {
-		document.getElementById("form").submit();
-	}
 	
-	function noDel() {
-		history.back();
-	/* location.assign("/list.do"); */
-	}
 	
-	</script>
 	
-
+	
+	</form>
 </body>
 </html>

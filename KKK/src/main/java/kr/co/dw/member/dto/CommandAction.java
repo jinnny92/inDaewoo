@@ -1,6 +1,6 @@
 package kr.co.dw.member.dto;
 
-public class CommandAction {//서블릿에서 jsp로 갈 때 사용
+public class CommandAction {
 	private String where;
 	private boolean isRedirect;
 	

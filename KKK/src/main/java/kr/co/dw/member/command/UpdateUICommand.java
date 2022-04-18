@@ -16,15 +16,14 @@ public class UpdateUICommand implements Command {
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		String sId = request.getParameter("id");
 		int id = Integer.parseInt(sId);
 		
 		MemberDAO dao = new MemberDAO();
-		
 		MemberDTO dto = dao.updateUICommand(new MemberDTO(id, null, 0));
 		
 		request.setAttribute("dto", dto);
+		
 		
 		return new CommandAction("member/jsp/update.jsp", false);
 	}

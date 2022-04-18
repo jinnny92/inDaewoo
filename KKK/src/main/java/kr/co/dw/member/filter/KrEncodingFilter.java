@@ -13,14 +13,15 @@ import javax.servlet.http.HttpFilter;
 /**
  * Servlet Filter implementation class KrEncodingFilter
  */
-@WebFilter("/*") //모든 요청에 대해 지원하게 하기 위해서
+@WebFilter("/*")
 public class KrEncodingFilter extends HttpFilter implements Filter {
        
- 
+    /**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
      * @see HttpFilter#HttpFilter()
      */
     public KrEncodingFilter() {
@@ -41,7 +42,6 @@ public class KrEncodingFilter extends HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset = UTF-8");
-		
 		chain.doFilter(request, response);
 	}
 

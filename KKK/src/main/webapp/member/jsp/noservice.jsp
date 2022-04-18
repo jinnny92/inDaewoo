@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>지원하지 않는 서비스입니다</h1>
+<h1>
+존재하지 않는 페이지 입니다
+</h1>
 </body>
 </html>

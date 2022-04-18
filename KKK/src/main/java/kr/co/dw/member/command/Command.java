@@ -9,6 +9,5 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.dw.member.dto.CommandAction;
 
 public interface Command {
-	public CommandAction execute(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException;
+	public CommandAction execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

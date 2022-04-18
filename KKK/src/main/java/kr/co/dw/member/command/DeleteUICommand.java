@@ -19,13 +19,11 @@ public class DeleteUICommand implements Command {
 		String sId = request.getParameter("id");
 		int id = Integer.parseInt(sId);
 		
-		/*
-		 * MemberDAO dao = new MemberDAO(); MemberDTO dto = dao.deleteUICommand(new
-		 * MemberDTO(id, null, 0));
-		 */
+		MemberDAO dao = new MemberDAO();
+		MemberDTO dto = dao.deleteUICommand(new MemberDTO(id, null, 0));
 		
-		request.setAttribute("id", id);
-			
+		request.setAttribute("dto", dto);
+		
 		return new CommandAction("member/jsp/delete.jsp", false);
 	}
 

@@ -8,20 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.dw.member.command.FindDTOByIdCommand;
 import kr.co.dw.member.dto.MemberDTO;
 
 public class MemberDAO {
 	private final String DRIVER = "oracle.jdbc.OracleDriver";
-	private final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	private final String USER = "dw";
+	private final String URL =	"jdbc:oracle:thin:@localhost:1521:xe";
+	private final String USER =	"dw";
 	private final String PASSWORD = "dw";
 	
 	public MemberDAO() {
 		// TODO Auto-generated constructor stub
 		try {
 			Class.forName(DRIVER);
-			System.out.println("드라이버 로딩 성공");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +53,7 @@ public class MemberDAO {
 		}
 	}
 	
-	public void insert(MemberDTO dto) {
+	public void insert(MemberDTO  dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO member(id, name, age) VALUES(?, ?, ?)";
@@ -63,13 +61,10 @@ public class MemberDAO {
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setInt(1, dto.getId());
 			pstmt.setString(2, dto.getName());
 			pstmt.setInt(3, dto.getAge());
-			
 			pstmt.executeUpdate();
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -77,13 +72,13 @@ public class MemberDAO {
 			closeAll(null, pstmt, conn);
 		}
 	}
-	
-	public MemberDTO findDTOById(MemberDTO dto) {
+	public MemberDTO findDTOByID(MemberDTO dto) {
 		MemberDTO findDTO = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "SELECT * FROM member WHERE id = ?";
 		ResultSet rs = null;
+		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = conn.prepareStatement(sql);
@@ -92,7 +87,6 @@ public class MemberDAO {
 			if (rs.next()) {
 				String name = rs.getString("name");
 				int age = rs.getInt("age");
-				
 				findDTO = new MemberDTO(dto.getId(), name, age);
 			}
 			
@@ -147,16 +141,15 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		String sql = "SELECT * FROM member ORDER BY id";
 		ResultSet rs = null;
+		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				int age = rs.getInt("age");
-				
 				list.add(new MemberDTO(id, name, age));
 			}
 		} catch (Exception e) {
@@ -165,19 +158,16 @@ public class MemberDAO {
 		}finally {
 			closeAll(rs, pstmt, conn);
 		}
-		
-		
 		return list;
-	}
-
-	public MemberDTO updateUICommand(MemberDTO memberDTO) {
-		// TODO Auto-generated method stub
-		
-		return findDTOById(memberDTO);
 	}
 
 	public MemberDTO deleteUICommand(MemberDTO memberDTO) {
 		// TODO Auto-generated method stub
-		return findDTOById(memberDTO);
+		return findDTOByID(memberDTO);
+	}
+
+	public MemberDTO updateUICommand(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		return findDTOByID(memberDTO);
 	}
 }
