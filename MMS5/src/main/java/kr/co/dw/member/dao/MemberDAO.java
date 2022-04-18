@@ -1,5 +1,6 @@
 package kr.co.dw.member.dao;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.dw.member.command.FindDTOByIdCommand;
 import kr.co.dw.member.dto.MemberDTO;
 
 public class MemberDAO {
@@ -21,7 +21,6 @@ public class MemberDAO {
 		// TODO Auto-generated constructor stub
 		try {
 			Class.forName(DRIVER);
-			System.out.println("드라이버 로딩 성공");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,99 +53,15 @@ public class MemberDAO {
 			}
 		}
 	}
-	
-	public void insert(MemberDTO dto) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO member(id, name, age) VALUES(?, ?, ?)";
-		
-		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, dto.getId());
-			pstmt.setString(2, dto.getName());
-			pstmt.setInt(3, dto.getAge());
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			closeAll(null, pstmt, conn);
-		}
-	}
-	
-	public MemberDTO findDTOById(MemberDTO dto) {
-		MemberDTO findDTO = null;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "SELECT * FROM member WHERE id = ?";
-		ResultSet rs = null;
-		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getId());
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				String name = rs.getString("name");
-				int age = rs.getInt("age");
-				
-				findDTO = new MemberDTO(dto.getId(), name, age);
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			closeAll(rs, pstmt, conn);
-		}
-		
-		return findDTO;
-	}
-	
-	public void update(MemberDTO dto) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "UPDATE member SET name = ?, age = ? WHERE id = ?";
-		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getName());
-			pstmt.setInt(2, dto.getAge());
-			pstmt.setInt(3, dto.getId());
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			closeAll(null, pstmt, conn);
-		}
-	}
-	
-	public void delete(MemberDTO dto) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "DELETE FROM member WHERE id = ?";
-		try {
-			conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getId());
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			closeAll(null, pstmt, conn);
-		}
-	}
+
 	public List<MemberDTO> list() {
+		// TODO Auto-generated method stub
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "SELECT * FROM member ORDER BY id";
 		ResultSet rs = null;
+		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = conn.prepareStatement(sql);
@@ -158,6 +73,7 @@ public class MemberDAO {
 				int age = rs.getInt("age");
 				
 				list.add(new MemberDTO(id, name, age));
+				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -166,18 +82,112 @@ public class MemberDAO {
 			closeAll(rs, pstmt, conn);
 		}
 		
-		
 		return list;
+	}
+
+	public void insert(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO member(id, name, age) VALUES(?, ?, ?)";
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberDTO.getId());
+			pstmt.setString(2, memberDTO.getName());
+			pstmt.setInt(3, memberDTO.getAge());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+			
+		}
+		
+	}
+
+	public void update(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE member SET name = ?, age = ? WHERE id = ?";
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberDTO.getName());
+			pstmt.setInt(2, memberDTO.getAge());
+			pstmt.setInt(3, memberDTO.getId());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+		}
+		
+	}
+
+	public MemberDTO finddtobyid(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		MemberDTO findDTO = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM member WHERE id = ?";
+		ResultSet rs = null;	
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberDTO.getId());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				findDTO = new MemberDTO(memberDTO.getId(), name, age);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(rs, pstmt, conn);
+		}
+		
+		return findDTO;
 	}
 
 	public MemberDTO updateUICommand(MemberDTO memberDTO) {
 		// TODO Auto-generated method stub
+		return finddtobyid(memberDTO);
+	}
+
+	public void delete(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM member WHERE id = ?";
 		
-		return findDTOById(memberDTO);
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberDTO.getId());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+		}
+		
 	}
 
 	public MemberDTO deleteUICommand(MemberDTO memberDTO) {
 		// TODO Auto-generated method stub
-		return findDTOById(memberDTO);
-	}
+		return finddtobyid(memberDTO);
+	}	
 }

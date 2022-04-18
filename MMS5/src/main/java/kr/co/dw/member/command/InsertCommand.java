@@ -7,26 +7,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.dw.member.dao.MemberDAO;
-import kr.co.dw.member.dto.CommandAction;
+import kr.co.dw.member.dto.CommanAction;
 import kr.co.dw.member.dto.MemberDTO;
 
-public class UpdateUICommand implements Command {
+public class InsertCommand implements Command {
 
 	@Override
-	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
+	public CommanAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		String sId = request.getParameter("id");
 		int id = Integer.parseInt(sId);
 		
+		String name = request.getParameter("name");
+		
+		String sAge = request.getParameter("age");
+		int age = Integer.parseInt(sAge);
+		
 		MemberDAO dao = new MemberDAO();
+		dao.insert(new MemberDTO(id, name, age));
 		
-		MemberDTO dto = dao.updateUICommand(new MemberDTO(id, null, 0));
-		
-		request.setAttribute("dto", dto);
-		
-		return new CommandAction("member/jsp/update.jsp", false);
+		return new CommanAction("list.do", true);
 	}
 
 }
