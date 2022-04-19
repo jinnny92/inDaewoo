@@ -7,11 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>회원 등록</h1>
-<form action="/insert.do" method="post"> 
-	ID : <input name="id"><br>
-	NAME : <input name = "name"><br>
-	AGE : <input name  = "age"><br>
-	<input type="submit" value="회원 등록">
+<h1>로그인 화면</h1>
+
+<form action="/login.do" method="post">
+	ID : <input name = "id"><br>
+	PW : <input name = "pw"><br>
+	
+	<input type="submit" value = "로그인 완료">
+	
+
+
+</form>
+
+
 </body>
 </html>

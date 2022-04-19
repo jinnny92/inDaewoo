@@ -17,6 +17,10 @@ import kr.co.dw.member.command.FindDTOByIDCommand;
 import kr.co.dw.member.command.InsertCommand;
 import kr.co.dw.member.command.InsertUICommand;
 import kr.co.dw.member.command.ListCommand;
+import kr.co.dw.member.command.LoginCommand;
+import kr.co.dw.member.command.LoginUICommand;
+import kr.co.dw.member.command.LogoutCommand;
+import kr.co.dw.member.command.LogoutUICommand;
 import kr.co.dw.member.command.UpdateCommand;
 import kr.co.dw.member.command.UpdateUICommand;
 import kr.co.dw.member.dto.CommandAction;
@@ -49,6 +53,10 @@ public class FrontController extends HttpServlet {
 		menus.put("/update.do", new UpdateCommand());
 		menus.put("/deleteui.do", new DeleteUICommand());
 		menus.put("/delete.do", new DeleteCommand());
+		menus.put("/loginui.do", new LoginUICommand());
+		menus.put("/login.do", new LoginCommand());
+		menus.put("/logoutui.do", new LogoutUICommand());
+		menus.put("/logout.do", new LogoutCommand());
 		
 		
 		String what = request.getServletPath();
@@ -64,7 +72,7 @@ public class FrontController extends HttpServlet {
 				request.getRequestDispatcher(action.getWhere()).forward(request, response);
 			}
 		}else {
-			request.getRequestDispatcher("noservice.jsp").forward(request, response);
+			request.getRequestDispatcher("member/jsp/noservice.jsp").forward(request, response);
 		}
 	}
 

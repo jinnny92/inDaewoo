@@ -9,6 +9,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="/insertui.do">회원등록</a> 
+
+<%-- ${login == null?"<a href = '/loginui.do'>로그인</a>":"<a href = '/logout.do'>로그아웃</a>"}<br> --%>
+${empty login? "<a href = '/loginui.do'>로그인</a>":"<a href = '/logout.do'>로그아웃</a>"}<br>
+
+ <a href="/loginui.do">로그인화면</a> 
+
+
 <h1>회원 정보</h1>
 
 <%
