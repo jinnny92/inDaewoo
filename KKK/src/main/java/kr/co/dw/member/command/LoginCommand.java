@@ -35,6 +35,7 @@ public class LoginCommand implements Command {
 		
 		session.setAttribute("login", login);
 		
+		System.out.println(":::::::::::::::::::");
 		
 		return new CommandAction("list.do", true);
 		//request에 redirect방식으로(같은요청) 하면 데이터 날아감 하지만 session은 아님. 
