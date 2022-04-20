@@ -45,7 +45,7 @@ public class FrontController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, Command> menus = new HashMap<String, Command>();
-		menus.put("/list.do", new ListCommand());
+		
 		menus.put("/insert.do", new InsertCommand());
 		menus.put("/insertui.do", new InsertUICommand());	
 		menus.put("/finddtobyid.do", new FindDTOByIDCommand());
