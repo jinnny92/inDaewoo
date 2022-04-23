@@ -17,17 +17,18 @@ List<MemberDTO> list = (List<MemberDTO>)request.getAttribute("list");
 
 for(int i = 0; i<list.size(); i++){
 	 MemberDTO dto =list.get(i);
-	 out.println("ID: ");
-	 out.println(dto.getId());
-	 out.println("&nbsp&nbsp&nbsp&nbsp");
 	 
+	 out.println("<a href='/finddtobyid.do?id="+dto.getId()+"'>");
+		out.println("ID: ");
+	   out.println(dto.getId());
+	   out.println("</a>");
+	   out.println("&nbsp;&nbsp;&nbsp;&nbsp;");
+	   
 	 out.println("NAME: ");
 	 out.println(dto.getName());
 	 out.println("&nbsp&nbsp&nbsp&nbsp");
 	 
-	 out.println("AGE: ");
-	 out.println(dto.getAge());
-	 out.println("<br>");
+
 	 %>
 	 
 	 <%= dto%>

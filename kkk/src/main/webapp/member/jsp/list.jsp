@@ -2,6 +2,8 @@
 <%@page import="kr.co.dw.member.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%--     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,26 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="/insertui.do">회원등록</a> 
+
+<%-- ${login == null?"<a href = '/loginui.do'>로그인</a>":"<a href = '/logout.do'>로그아웃</a>"}<br> --%>
+${empty login? "<a href = '/loginui.do'>로그인</a>":"<a href = '/logout.do'>로그아웃</a>"}<br>
+
+
+<%-- <c:if test="${empty login}">
+<a href='/loginui.do'>로그인</a>
+
+</c:if>
+
+<c:if test="${not empty login}">
+${login.name} 님, 환영합니다. <a href="/logout.do">로그아웃</a>
+</c:if>
+
+ <a href="/loginui.do">로그인화면</a> 
+  --%>
+<%--  <%@ include file="../../common/jsp/p_menu.jsp" %> --%>
+
+
 <h1>회원 정보</h1>
 
 <%

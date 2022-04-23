@@ -170,4 +170,38 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return findDTOByID(memberDTO);
 	}
+
+	public MemberDTO login(MemberDTO memberDTO) {
+		// TODO Auto-generated method stub
+		MemberDTO login = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "SELECT id, name FROM member WHERE id = ? AND age = ?";
+		ResultSet rs = null;
+		
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberDTO.getId());
+			pstmt.setInt(2, memberDTO.getAge());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				String name = rs.getString("name"); //별칭을 넣어도 되지만 인덱스를 넣어도됨 직계함수(COUNT) 사용할때 주로 사용
+				
+				login = new MemberDTO(memberDTO.getId(), name, 0);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(rs, pstmt, conn);
+		}
+		
+		return login;
+	}
+
+
 }

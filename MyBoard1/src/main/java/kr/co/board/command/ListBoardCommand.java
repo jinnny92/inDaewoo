@@ -16,11 +16,24 @@ public class ListBoardCommand implements BoardCommand {
 	@Override
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+<<<<<<< HEAD
 		
 		BoardDAO bDao = new BoardDAO();
 		List<BoardDTO> list = bDao.list();
 		
 		request.setAttribute("list", list);
+=======
+		// TODO Auto-generated method stub
+		
+		BoardDAO bDao = new BoardDAO();
+		
+		List<BoardDTO> list = bDao.list();
+		
+		request.setAttribute("list", list);
+		
+		System.out.println(list);
+		
+>>>>>>> refs/remotes/origin/master
 		
 		return new BoardCommandAction("/jsp/board/list.jsp", false);
 	}

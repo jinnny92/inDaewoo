@@ -14,7 +14,7 @@ public class DeleteUICommand implements Command {
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		return null;
+		return new CommandAction("member/jsp/delete.jsp", false);
 	}
 
 }
