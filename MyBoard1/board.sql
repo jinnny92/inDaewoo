@@ -15,5 +15,6 @@ CREATE TABLE tbl_board(
 
 CREATE SEQUENCE seq_board_num
 
+
 SELECT * FROM tbl_board;
 

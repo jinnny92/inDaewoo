@@ -99,11 +99,11 @@ public class BoardDAO {
 					int num = rs.getInt("num");
 					String writer = rs.getString("writer");
 					String title =  rs.getString("title");
-					String writeday = rs.getString("writerDay");
+					String writeday = rs.getString("writeDay");
 					int readcnt = rs.getInt("readcnt");
-					int repRoot = rs.getInt("repRoot");
-					int repStep = rs.getInt("repStep");
-					int repIndent = rs.getInt("repIndent");
+					int repRoot = rs.getInt("reproot");
+					int repStep = rs.getInt("repstep");
+					int repIndent = rs.getInt("repindent");
 					
 				
 					

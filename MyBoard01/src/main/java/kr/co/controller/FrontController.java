@@ -1,10 +1,9 @@
-package kr.co.board.controller;
+package kr.co.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.board.command.BoardCommand;
+import kr.co.board.command.DeleteBoardCommand;
 import kr.co.board.command.InsertBoardCommand;
 import kr.co.board.command.InsertUIBoardCommand;
 import kr.co.board.command.ListBoardCommand;
+import kr.co.board.command.ReadBoardCommand;
+import kr.co.board.command.ReplyBoardCommand;
+import kr.co.board.command.ReplyUIBoardCommand;
+import kr.co.board.command.UpdateBoardCommand;
+import kr.co.board.command.UpdateuiBoardCommand;
 import kr.co.board.domain.BoardCommandAction;
 
 /**
@@ -37,30 +42,38 @@ public class FrontController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, BoardCommand> menus = new HashMap<String, BoardCommand>();
+	
 		menus.put("/board/insertui.do", new InsertUIBoardCommand());
 		menus.put("/board/insert.do", new InsertBoardCommand());
 		menus.put("/board/list.do", new ListBoardCommand());
+		menus.put("/board/read.do", new ReadBoardCommand());
+		menus.put("/board/updateui.do", new UpdateuiBoardCommand());
+		menus.put("/board/update.do", new UpdateBoardCommand());
+		menus.put("/board/delete.do", new DeleteBoardCommand());
+		menus.put("/board/replyui.do", new ReplyUIBoardCommand());
+		menus.put("/board/reply.do", new ReplyBoardCommand());
 		
 		
 		
 		String what = request.getServletPath();
 		
-	
-		BoardCommand bCommand = menus.get(what.toLowerCase()); //클라이언트가 요구하는 서비스가 있는지 확인 toLowerCase()클라이언트가 막 입력해도 소문자로 받음
 		
-		if (bCommand != null) {
+		BoardCommand bCommand = menus.get(what.toLowerCase());
+		
+		if(bCommand != null) {
 			BoardCommandAction bAction = bCommand.execute(request, response);
-			if (bAction.isRedirect()) {
+			if(bAction.isRedirect()) {
 				response.sendRedirect(bAction.getWhere());
-			} else {
-				RequestDispatcher dis = request.getRequestDispatcher(bAction.getWhere());
-						dis.forward(request, response);
-				
+			}else {
+				request.getRequestDispatcher(bAction.getWhere())
+				.forward(request, response);
 			}
-			
-		} else {
-			request.getRequestDispatcher("/jsp/noserviceinfo.jsp").forward(request, response);
+		}else {
+			request.getRequestDispatcher("/jsp/noserviceinfo.jsp")
+			.forward(request, response);
 		}
+		
+		
 		
 		
 		

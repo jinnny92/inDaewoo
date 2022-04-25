@@ -10,30 +10,30 @@ public class BoardDTO implements Serializable{
 	private String writer;
 	private String title;
 	private String content;
-	private String writerDay;
+	private String writeDay;
 	private String updateDay;
 	private int readcnt;
-	private int reproot;
-	private int repstep;
-	private int repindent; 
+	private int repRoot;
+	private int repStep;
+	private int repIndent; 
 	
 public BoardDTO() {
 	// TODO Auto-generated constructor stub
 }
 
-public BoardDTO(int num, String writer, String title, String content, String writerDay, String updateDay, int readcnt,
+public BoardDTO(int num, String writer, String title, String content, String writeDay, String updateDay, int readcnt,
 		int reproot, int repstep, int repindent) {
 	super();
 	this.num = num;
 	this.writer = writer;
 	this.title = title;
 	this.content = content;
-	this.writerDay = writerDay;
+	this.writeDay = writeDay;
 	this.updateDay = updateDay;
 	this.readcnt = readcnt;
-	this.reproot = reproot;
-	this.repstep = repstep;
-	this.repindent = repindent;
+	this.repRoot = reproot;
+	this.repStep = repstep;
+	this.repIndent = repindent;
 }
 
 public int getNum() {
@@ -69,11 +69,11 @@ public void setContent(String content) {
 }
 
 public String getWriterDay() {
-	return writerDay;
+	return writeDay;
 }
 
 public void setWriterDay(String writerDay) {
-	this.writerDay = writerDay;
+	this.writeDay = writerDay;
 }
 
 public String getUpdateDay() {
@@ -93,27 +93,27 @@ public void setReadcnt(int readcnt) {
 }
 
 public int getReproot() {
-	return reproot;
+	return repRoot;
 }
 
 public void setReproot(int reproot) {
-	this.reproot = reproot;
+	this.repRoot = reproot;
 }
 
 public int getRepstep() {
-	return repstep;
+	return repStep;
 }
 
 public void setRepstep(int repstep) {
-	this.repstep = repstep;
+	this.repStep = repstep;
 }
 
 public int getRepindent() {
-	return repindent;
+	return repIndent;
 }
 
 public void setRepindent(int repindent) {
-	this.repindent = repindent;
+	this.repIndent = repindent;
 }
 
 public static long getSerialversionuid() {
@@ -140,8 +140,8 @@ public boolean equals(Object obj) {
 @Override
 public String toString() {
 	return "BoardDTO [num=" + num + ", writer=" + writer + ", title=" + title + ", content=" + content + ", writerDay="
-			+ writerDay + ", updateDay=" + updateDay + ", readcnt=" + readcnt + ", reproot=" + reproot + ", repstep="
-			+ repstep + ", repindent=" + repindent + "]";
+			+ writeDay + ", updateDay=" + updateDay + ", readcnt=" + readcnt + ", reproot=" + repRoot + ", repstep="
+			+ repStep + ", repindent=" + repIndent + "]";
 }
 
 

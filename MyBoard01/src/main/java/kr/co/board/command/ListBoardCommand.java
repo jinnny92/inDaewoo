@@ -17,16 +17,14 @@ public class ListBoardCommand implements BoardCommand {
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		BoardDAO bDao = new BoardDAO();
+		List<BoardDTO>list = bDao.list();
 		
-		List<BoardDTO> list = bDao.list();
+		
 		
 		request.setAttribute("list", list);
 		
-		
-		
-		return new BoardCommandAction("/jsp/board/list.do", false);
+		return new BoardCommandAction("/jsp/board/list.jsp", false);
 	}
 
 }
