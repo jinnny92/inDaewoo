@@ -1,7 +1,6 @@
 package kr.co.board.command;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,30 +10,26 @@ import kr.co.board.dao.BoardDAO;
 import kr.co.board.domain.BoardCommandAction;
 import kr.co.board.domain.BoardDTO;
 
-public class ListBoardCommand implements BoardCommand {
+public class ReadBoardCommand implements BoardCommand {
 
 	@Override
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-<<<<<<< HEAD
-		
-		BoardDAO bDao = new BoardDAO();
-		List<BoardDTO> list = bDao.list();
-		
-		request.setAttribute("list", list);
-=======
 		// TODO Auto-generated method stub
 		
+		String sNum = request.getParameter("num");
+		int num = Integer.parseInt(sNum);
+		
 		BoardDAO bDao = new BoardDAO();
+		 BoardDTO bDto = bDao.read2(num);
+		 
+		 bDto.setContent(bDto.getContent().replace(System.lineSeparator(), "<br>")); 
+		//줄바꿈을 제거하는 메소드
 		
-		List<BoardDTO> list = bDao.list();
-		
-		request.setAttribute("list", list);
+		request.setAttribute("bDto", bDto);
 		
 		
->>>>>>> refs/remotes/origin/master
-		
-		return new BoardCommandAction("/jsp/board/list.do", false);
+		return new BoardCommandAction("/jsp/board/read.jsp", false);
 	}
 
 }

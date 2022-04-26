@@ -8,21 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.board.domain.BoardCommandAction;
 
-public class InsertUIBoardCommand implements BoardCommand {
+public class ReplyUIBoardCommand implements BoardCommand {
 
 	@Override
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-=======
+		String sNum = request.getParameter("num");
+		int num = Integer.parseInt(sNum);
 		
+		request.setAttribute("orgnum", num);
 		
-	
-		
-		
->>>>>>> refs/remotes/origin/master
-		return new BoardCommandAction("/jsp/board/insert.jsp", false);
+		return new BoardCommandAction("/jsp/board/reply.jsp", false);
 	}
 
 }

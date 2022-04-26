@@ -14,14 +14,8 @@ public class InsertUIBoardCommand implements BoardCommand {
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-=======
 		
 		
-	
-		
-		
->>>>>>> refs/remotes/origin/master
 		return new BoardCommandAction("/jsp/board/insert.jsp", false);
 	}
 

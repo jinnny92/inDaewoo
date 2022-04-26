@@ -15,36 +15,18 @@ public class InsertBoardCommand implements BoardCommand {
 	@Override
 	public BoardCommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-<<<<<<< HEAD
+		// TODO Auto-generated method stub
 		String writer = request.getParameter("writer");
+		
 		String title = request.getParameter("title");
+		
 		String content = request.getParameter("content");
 		
 		BoardDAO bDao = new BoardDAO();
 		bDao.insert(new BoardDTO(0, writer, title, content, null, null, 0, 0, 0, 0));
-				
-=======
-		// TODO Auto-generated method stub
-		
-	
-	String writer = request.getParameter("writer");
-		
-	String title = request.getParameter("title");
-	
-	
-	String content = request.getParameter("content");
-	
-	
-	
-	
-	BoardDAO bDao = new BoardDAO();
-	bDao.insert
-	(new BoardDTO(0, writer, title, content, null, null, 0, 0, 0, 0));
-	
 		
 		
 		
->>>>>>> refs/remotes/origin/master
 		return new BoardCommandAction("/board/list.do", true);
 	}
 
