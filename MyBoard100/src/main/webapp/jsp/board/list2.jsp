@@ -79,16 +79,32 @@ td.title a{
    
 
  
- <a href="/board/list.do?curPage=${pt.curPage > 1? pt.curPage-1:1}">&laquo;</a>
+ <a href="/board/list.do?curPage=${pt.curPage>1? pt.curPage-1:1}">&laquo;</a>
  <c:forEach var="i" begin="${pt.beginPageNum}" end="${pt.finishPageNum}">
  	<a href="/board/list.do?curPage=${i}" class = "${i == pt.curPage?'red':''}">${i}</a> 
  	
  
 
  </c:forEach>
- <a href="/board/list.do?curPage=${pt.curPage < pt.totalPage? pt.curPage+1:pt.totalPage}"> &raquo;</a>
+ <a href="/board/list.do?curPage=${pt.curPage<pt.totalPage? pt.curPage+1:pt.totalPage}"> &raquo;</a>
  
- 
+
+<form action="/board/search.do">
+<select name = "criteria">
+<option >검색</option>
+<option value="writer">작성자</option>
+<option value= "title">제목</option>
+<option value="content">내용</option>
+</select>
+
+<input name = "keyword">
+<input type="submit" value="검색">
+
+
+</form>
+
+
+<!-- //DB작업할때 퍼센트사용해야한다. like _%   -->
  <script type="text/javascript">
  	function openInsertUi() {
  		location.assign("/board/insertui.do");
