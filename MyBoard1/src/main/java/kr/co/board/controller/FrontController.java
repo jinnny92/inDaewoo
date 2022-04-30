@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,7 +53,9 @@ public class FrontController extends HttpServlet {
 			if (bAction.isRedirect()) {
 				response.sendRedirect(bAction.getWhere());
 			} else {
-				request.getRequestDispatcher(bAction.getWhere());
+				RequestDispatcher dis = request.getRequestDispatcher(bAction.getWhere());
+						dis.forward(request, response);
+				
 			}
 			
 		} else {

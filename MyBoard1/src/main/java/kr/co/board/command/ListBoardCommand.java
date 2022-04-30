@@ -31,11 +31,10 @@ public class ListBoardCommand implements BoardCommand {
 		
 		request.setAttribute("list", list);
 		
-		System.out.println(list);
 		
 >>>>>>> refs/remotes/origin/master
 		
-		return new BoardCommandAction("/jsp/board/list.jsp", false);
+		return new BoardCommandAction("/jsp/board/list.do", false);
 	}
 
 }
