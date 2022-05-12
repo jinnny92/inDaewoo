@@ -104,6 +104,8 @@ td.title a{
 </form>
 
 
+
+
 <!-- //DB작업할때 퍼센트사용해야한다. like _%   -->
  <script type="text/javascript">
  	function openInsertUi() {

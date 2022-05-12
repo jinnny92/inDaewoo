@@ -75,7 +75,7 @@ public class BoardDAO {
 		//seq_board_num.NEXTVAL 새로운sequence                   seq_board_num.CURRVAL 현재의 sequence
 		Connection conn= null;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO tbl_board"+"(num, writer, title, content, repRoot, repStep, repIndent)" + "VALUES" +"(seq_board_num.NEXTVAL ,?, ?, ?, seq_board_num.CURRVAL, 0, 0)";
+		String sql = "INSERT INTO tbl_board"+"(num, writer, title, content, repRoot, repStep, repIndent)" + "VALUES" +"(seq_board_num.NEXTVAL, ?, ?, ?, seq_board_num.CURRVAL, 0, 0)";
 		
 		try {
 			
