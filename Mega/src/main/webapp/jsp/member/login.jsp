@@ -12,41 +12,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-<h1>글읽기</h1>
+</head>
+<body>
 
-<p>번호: ${dto.num}</p><br>
-<p>제목: ${dto.title}</p><br>
-<p>작성자: ${dto.id}</p><br>
-<p>등록일: ${dto.writeDay}</p><br>
-<p>수정일:${dto.updateDay}</p><br>
-<p>조회수:${dto.readCnt}</p><br>
-
-<p>내용:</p>
-
-<p>${dto.content}</p>
-
-<br>
+<h1>로그인</h1>
 
 
+<form action="/member/login.do" method="post">
+
+ID : <input name="id"><br>	
+PW : <input name="pw"><br>
+
+<input type="submit" value="로그인"> 
 
 
-<br>
-
-
-<br>
-<a href="/board/list.do">글목록</a>
-<a href="/board/insertui.do">글쓰기</a>
-<a href="/board/updateui.do?num=${dto.num}">수정</a>
-<a href="/board/delete.do?num=${dto.num}">삭제</a>
-<a href="/board/replyui.do?num=${dto.num}">답글</a>
-
-
-
-
-
-
-
+</form>
 </body>
 </html>
-
-

@@ -23,6 +23,10 @@ td.title a{
 	text-decoration: none;
 }
 
+.red{
+	color : red;
+}
+
 </style>
 
 
@@ -45,7 +49,8 @@ td.title a{
 		<th>repRoot</th>
 		<th>repStep</th>
 	</tr>
-	<c:forEach items="${list}" var="list">
+	
+	<c:forEach items="${pt.list}" var="list">
 		<tr>
 		<td>${list.num}</td>
 		<td class="title">
@@ -67,7 +72,30 @@ td.title a{
 	</c:forEach>
 </table>
 
+<a href="/board/list.do?curPage=${pt.curPage>1? pt.curPage -1:1 }">&laquo;</a>
+<c:forEach begin="${pt.beginPageNum}" end="${pt.finishPageNum}" var="i">
+
+		<a href="/board/list.do?curPage=${i}" class="${i == pt.curPage?'red':''}"> ${i}</a> 
+
+
+</c:forEach>
+<a href="/board/list.do?curPage=${pt.curPage<pt.totalPage? pt.curPage+1:pt.totalPage }">&raquo;</a>
+<br>
+
 <a href="/board/insertui.do">글쓰기</a>
+
+
+<form action="/board/search.do">
+	<select name="criteria">
+			<option value="id">작성자</option>
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+	</select>
+		<input name="keyword">
+		<input type="submit" value="검색">
+
+
+</form>
 
 </body>
 </html>

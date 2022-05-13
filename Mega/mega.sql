@@ -31,3 +31,20 @@ CONSTRAINT fk_board2_id foreign key(id) references member2(id)
 CREATE SEQUENCE seq_board2_num
 
 DROP SEQUENCE seq_board2_num
+
+SELECT COUNT(num) FROM board2 
+
+
+SELECT * from board2 ORDER BY repRoot desc, repStep asc;
+
+
+
+
+SELECT * FROM (SELECT 
+rownum rnum, num, id, title, updateday, readCnt, repIndent 
+from (SELECT * from board2 ORDER BY repRoot desc, repStep asc)) WHERE rnum between 1 and 20;
+
+
+SELECT 
+rownum rnum, num, id, title, updateday, readCnt, repIndent 
+from (SELECT * from board2 ORDER BY repRoot desc, repStep asc)

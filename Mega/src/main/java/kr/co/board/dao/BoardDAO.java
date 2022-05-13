@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.co.domain.BoardDTO;
+import kr.co.domain.PageTO;
 
 public class BoardDAO {
 	private DataSource dataFactory;
@@ -126,13 +127,6 @@ public class BoardDAO {
 		return list;
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	public BoardDTO read(int num) {
 		//업데이트UI때문에 read 메서드를 살려둠 수정하겠다고 눌렀는데 조회수가 증가하면 안되니까. 
 		//read는 그냥 DTO가져오는거 read2는 DTO도 가져오고 조회수도 증가
@@ -176,30 +170,7 @@ public class BoardDAO {
 		
 		return read;
 	}
-	
-	
-	
-//	public BoardDTO read3(int num) {
-//		BoardDTO read = null;
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		String sql1 = "SELECT * FROM board2 WHERE num = ?";
-//		String sql2 = "UPDATE board2 SET readCnt = readCnt+1 WHERE num = ?";
-//		ResultSet rs = null;
-//		
-//		try {
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//		
-//		
-//		return read;
-//	}
-//	
-//	
-	
+
 	
 	public BoardDTO read2(int num) {
 		// TODO Auto-generated method stub
@@ -332,40 +303,55 @@ public class BoardDAO {
 		}
 				
 	}
+	
+	
+	
+	
+	
 
 	public void reply(int orgnum, BoardDTO dto) {
 		// TODO Auto-generated method stub
-		BoardDTO orgDto = null;
+		//BoardDTO orgDto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql1 = "UPDATE board2 SET repStep = repStep + 1 WHERE repRoot = ? AND repStep > ?";
+		//String sql1 = "UPDATE board2 SET repStep = repStep + 1 WHERE repRoot = ? AND repStep > ?";
 		String sql2 = "INSERT INTO board2(num, id, title, content, repRoot, repStep, repIndent) VALUES(seq_board2_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
-		String sql3 = "SELECT * FROM board2 WHERE num = ?";
+		//String sql3 = "SELECT * FROM board2 WHERE num = ?";
 		ResultSet rs = null;
 		boolean isOk = false;
 		
 		try {
 			conn = dataFactory.getConnection();
 			conn.setAutoCommit(false);
-			pstmt = conn.prepareStatement(sql3);
-			pstmt.setInt(1, orgnum);
-			rs = pstmt.executeQuery();
 			
-			if (rs.next()) {
-				int ordrepRoot = rs.getInt("repRoot");
-				int ordrepStep = rs.getInt("repStep");
-				int ordrepIndent = rs.getInt("repIndent");
+			BoardDTO orgDto = SelectByOrgNum(conn, orgnum);
+//			pstmt = conn.prepareStatement(sql3);
+//			pstmt.setInt(1, orgnum);
+//			rs = pstmt.executeQuery();
+//			
+//			if (rs.next()) {
+//				int ordrepRoot = rs.getInt("repRoot");
+//				int ordrepStep = rs.getInt("repStep");
+//				int ordrepIndent = rs.getInt("repIndent");
+//				
+//				orgDto= new BoardDTO(orgnum, null, null, null, null, null, 0, ordrepRoot, ordrepStep, ordrepIndent);
+//				
+//				
+//			}
+//				pstmt.close();
+//				
 				
-				orgDto= new BoardDTO(orgnum, null, null, null, null, null, 0, ordrepRoot, ordrepStep, ordrepIndent);
-				pstmt.close();
+				
+				int result = increaseRepStep(conn, orgDto);
 				
 				
-				pstmt = conn.prepareStatement(sql1);
-				pstmt.setInt(1, orgDto.getRepRoot());
-				pstmt.setInt(2, orgDto.getRepStep());
-				pstmt.executeUpdate();
-				pstmt.close();
 				
+//				pstmt = conn.prepareStatement(sql1);
+//				pstmt.setInt(1, orgDto.getRepRoot());
+//				pstmt.setInt(2, orgDto.getRepStep());
+//				pstmt.executeUpdate();
+//				pstmt.close();
+//				
 				
 				
 				pstmt = conn.prepareStatement(sql2);
@@ -382,9 +368,9 @@ public class BoardDAO {
 				
 				pstmt.executeUpdate();
 				
-			}
 			
-			isOk = true;
+			
+			isOk = (orgDto != null) && (result == 1)? true:false;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -408,6 +394,63 @@ public class BoardDAO {
 			closeAll(rs, pstmt, conn);
 		}
 		
+	}
+
+	private int increaseRepStep(Connection conn, BoardDTO orgDto) {
+		// TODO Auto-generated method stub
+		int result = -1; //정상적으로 끝나면 1을 반환/ 그렇지 않고 비정상적으로 끝나면 -1을 반환하도록 만들것이다
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE board2 SET repStep = repStep+1 WHERE repRoot = ? AND repStep > ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orgDto.getRepRoot());
+			pstmt.setInt(2, orgDto.getRepStep());
+			pstmt.executeUpdate();
+			
+			result = 1;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			result = -1;
+		}finally {
+			closeAll(null, pstmt, null);
+		}
+		
+		
+		
+		
+		return result;
+	}
+
+	private BoardDTO SelectByOrgNum(Connection conn, int orgnum) {
+		// TODO Auto-generated method stub
+		BoardDTO orgDto = null;
+		PreparedStatement pstmt = null;
+		String sql = "SELECT * FROM board2 WHERE num = ?";
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, orgnum);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				int repRoot = rs.getInt("repRoot");
+				int repStep = rs.getInt("repStep");
+				int repIndent = rs.getInt("repIndent");
+				
+				orgDto = new BoardDTO(orgnum, null, null, null, null, null, 0, repRoot, repStep, repIndent);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			orgDto = null;
+		}finally {
+			closeAll(rs, pstmt, null);
+		}
+		
+		return orgDto;
 	}
 	
 	
@@ -499,6 +542,118 @@ public class BoardDAO {
 //				
 //				
 //	}
+	
+	
+		public PageTO<BoardDTO> page(int curpage){//리스트라는 메서드가 있지만 페이지라는 메서드를 만듦 왜냐면 리스트는 목록 전체. 얘는 특정페이지가 현재 페이지가 되도록
+			PageTO<BoardDTO> pt = new PageTO<BoardDTO>(curpage); //현재페이지에 관한 정보를 넘겨주려고 (curpage)를 넣음
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = "SELECT * FROM (SELECT "
+					+ "rownum rnum, num, id, title, updateday, readCnt, repIndent "
+					+ "from (SELECT * from board2 ORDER BY repRoot desc, repStep asc)) WHERE rnum between ? and ?";
+			ResultSet rs = null;
+			
+			try {
+					conn = dataFactory.getConnection();
+					
+					int amount = getAmount(conn); //getAmount메서드 호출/ int amount => amount를 넘거받음
+					pt.setAmount(amount); //amount셋팅하는 작업 내부적으로 calculater라는 메서드 호출
+					
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, pt.getStartNum());
+					pstmt.setInt(2, pt.getEndNum());
+					
+					rs = pstmt.executeQuery();
+					
+					while (rs.next()) {
+						int num = rs.getInt("num");
+						String id = rs.getString("id");
+						String title = rs.getString("title");
+						String updateDay = rs.getString("updateDay");
+						int readCnt = rs.getInt("readCnt");
+						int repIndent = rs.getInt("repIndent");
+						
+						BoardDTO dto = new BoardDTO(num, id, title, null, null, updateDay, readCnt, 0, 0, repIndent);
+						pt.getList().add(dto);
+					}
+					
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}finally {
+				closeAll(rs, pstmt, conn);
+			}
+			
+			
+			
+			return pt;
+		}
+	
+	
+	
+		public int getAmount(Connection conn) { //amount 가져오는 작업 페이징처리하는 메서드에서 호출되는거기때문에 conn을 넣어준거
+			int amount = 0;
+			PreparedStatement pstmt = null;
+			String sql = "SELECT COUNT(num) FROM board2"; //기본키 넣어주는게 대세
+			ResultSet rs = null;
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+				amount =  rs.getInt(1); //인덱스의 순서 하나밖에 없으니까 1번
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}finally {
+				closeAll(rs, pstmt, null);
+			}
+			
+			
+			
+			
+			return amount;
+		}
+
+		public List<BoardDTO> search(String criteria, String keyword) {
+			// TODO Auto-generated method stub
+			List<BoardDTO> list = new ArrayList<BoardDTO>();
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String sql = "SELECT * FROM board2 WHERE UPPER(" + criteria + ") like UPPER(?)";
+			ResultSet rs = null;
+			
+			
+			
+			try {
+				conn = dataFactory.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1,"%"+keyword+"%");
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					int num = rs.getInt("num");
+					String title = rs.getString("title");
+					String id = rs.getString("id");
+		
+					String updateDay = rs.getString("updateDay");
+					int readCnt = rs.getInt("readCnt");
+					int repIndent = rs.getInt("repIndent");
+					
+					list.add(new BoardDTO(num, id, title, null, null, updateDay, readCnt, 0, 0, repIndent));
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}finally {
+				closeAll(rs, pstmt, conn);
+			}
+			
+			
+			
+			return list;
+		}
 
 	
 		}

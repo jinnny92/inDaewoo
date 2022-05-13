@@ -200,5 +200,44 @@ public class MemberDAO {
 	}
 
 
+	public MemberDTO login(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		MemberDTO login = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "SELECT id, name 이름 FROM member2 WHERE id = ? AND pw = ?";
+		ResultSet rs = null;
+		
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPw());
+			rs = pstmt.executeQuery();
+			
+			
+			//while문은 다 돌고난 다음에 한 번더 조건식으로 가지만 if문은 true/false 확인한 다음 true면 실행하고 빠져나오기때문에
+			//if문을 쓸 수 있으면 쓰는것이 더 좋다아아
+			
+			
+			if (rs.next()) {
+					String name = rs.getString("이름");
+					
+					login = new MemberDTO(dto.getId(), dto.getPw(), name);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			closeAll(rs, pstmt, conn);
+		}
+		
+		
+		return login;
+	}
+
+
 	
 }

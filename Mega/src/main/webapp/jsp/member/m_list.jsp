@@ -27,5 +27,9 @@
 <a href="/board/insertui.do">글쓰기</a>
 <a href="/board/list.do">글목록</a>
 
+${login == null? "<a href='/member/loginui.do'>로그인</a>":"<a href='/member/logout.do'>로그아웃<a>"}<br>
+
+
+
 </body>
 </html>

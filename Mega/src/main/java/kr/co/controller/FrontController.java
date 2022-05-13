@@ -17,6 +17,7 @@ import kr.co.board.command.ListBoardCommand;
 import kr.co.board.command.ReadBoardCommand;
 import kr.co.board.command.ReplyBoardCommand;
 import kr.co.board.command.ReplyUIBoardCommand;
+import kr.co.board.command.SearchBoardCommand;
 import kr.co.board.command.UpdateBoardCommand;
 import kr.co.board.command.UpdateUIBoardCommand;
 import kr.co.domain.CommandAction;
@@ -25,6 +26,9 @@ import kr.co.member.command.FindDTOByidCommand;
 import kr.co.member.command.InsertMemberCommand;
 import kr.co.member.command.InsertUIMemberCommand;
 import kr.co.member.command.ListMemberCommand;
+import kr.co.member.command.LoginMemberCommand;
+import kr.co.member.command.LoginUIMemberCommand;
+import kr.co.member.command.LogoutMemberCommand;
 import kr.co.member.command.UpdateMemberCommand;
 import kr.co.member.command.UpdateUIMemberommand;
 import kr.co.menu.MenuCommand;
@@ -57,6 +61,15 @@ public class FrontController extends HttpServlet {
 			menu.put("/member/update.do", new UpdateMemberCommand());
 			menu.put("/member/updateui.do", new UpdateUIMemberommand());
 			menu.put("/member/delete.do", new DeleteMemberommand());
+			menu.put("/member/loginui.do", new LoginUIMemberCommand());
+			menu.put("/member/login.do", new LoginMemberCommand());
+			menu.put("/member/logout.do", new LogoutMemberCommand());
+			
+			
+			
+			
+			
+			
 			
 			menu.put("/board/insert.do", new InsertBoardCommand());
 			menu.put("/board/insertui.do", new InsertUIBoardCommand());
@@ -67,6 +80,7 @@ public class FrontController extends HttpServlet {
 			menu.put("/board/delete.do", new DeleteBoardCommand());
 			menu.put("/board/reply.do", new ReplyBoardCommand());
 			menu.put("/board/replyui.do", new ReplyUIBoardCommand());
+			menu.put("/board/search.do", new SearchBoardCommand());
 			
 			
 			

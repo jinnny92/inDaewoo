@@ -8,34 +8,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-
-td{
-	text-align: center;
-	padding: 0 5px;
-}
-
-td.title{
-	text-align: left;
-	}
-	
-td.title a{
-	text-decoration: none;
-}
-
-</style>
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>글목록</h1>
+<h1>검색결과</h1>
+
 
 <table border="1">
+ <thead>
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
@@ -45,7 +28,13 @@ td.title a{
 		<th>repRoot</th>
 		<th>repStep</th>
 	</tr>
-	<c:forEach items="${list}" var="list">
+	
+</thead>
+     <tbody>
+
+<c:forEach items="${list}" var="list">
+
+
 		<tr>
 		<td>${list.num}</td>
 		<td class="title">
@@ -56,7 +45,7 @@ td.title a{
 					</c:forEach>
 					
 					
-					${list.title}</a>
+			${list.title}</a>
 		</td>
 		<td>${list.id}</td>
 		<td>${list.updateDay}</td>
@@ -65,9 +54,10 @@ td.title a{
 		<td>${list.repStep}</td>
 		</tr>
 	</c:forEach>
+	   </tbody>
 </table>
 
-<a href="/board/insertui.do">글쓰기</a>
+
 
 </body>
 </html>
