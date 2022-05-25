@@ -19,6 +19,12 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	
 	@Override
+	public void delete(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(NAMESPACE + ".delete", dto);
+	}
+	
+	@Override
 	public void update(MemberDTO dto) {
 		// TODO Auto-generated method stub
 	

@@ -23,7 +23,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 		public String delete(MemberDTO dto) {
-			System.out.println("삭제완료");
+			mService.delete(dto);
 			
 		return "redirect:/member/list";
 	}

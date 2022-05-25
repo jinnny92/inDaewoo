@@ -15,6 +15,12 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO mDao;
 	
 	@Override
+	public void delete(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		mDao.delete(dto);
+	}
+	
+	@Override
 	public void update(MemberDTO dto) {
 		// TODO Auto-generated method stub
 		mDao.update(dto);

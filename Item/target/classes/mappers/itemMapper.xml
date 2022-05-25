@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.item">
+	<delete id="delete">
+	  DELETE FROM tbl_item WHERE iId = #{iId}
+	
+	</delete>
+	
+	
+	
+	<select id="updateUI" resultType="kr.co.dw.domain.ItemDTO">
+		SELECT * FROM tbl_item WHERE iId = #{iId} 
+		<!--이 아이디는 memberDAOImpl의 변수명과 관련있음-->
+	</select>
+	
+
+
+<update id="update">
+	UPDATE tbl_item
+	SET
+	iName = #{iName}, iPrice=#{iPrice}, iDc = #{iDc}, iCount = #{iCount}
+	WHERE iId = #{iId}
+
+
+</update>
+
+
+
+
+
+	<select id="list" resultType="kr.co.dw.domain.ItemDTO">
+		SELECT * FROM tbl_item ORDER BY iId DESC
+	
+	</select>
+
+
+	<select id="read" resultType="kr.co.dw.domain.ItemDTO">
+	
+	SELECT * FROM tbl_item WHERE iId = #{iId}
+	
+	</select>
+
+
+
+	<insert id="insert">
+	
+	INSERT INTO tbl_item(iId, iName, iPrice, iDc, iCount) 
+	VALUES(seq_item_iId.NEXTVAL, #{iName}, #{iPrice}, #{iDc}, #{iCount} )
+	
+	<selectKey keyProperty="iId" resultType="Integer" order="AFTER">
+	
+		SELECT seq_item_iId.CURRVAL FROM DUAL
+	</selectKey>
+	</insert>
+  
+  
+  
+  
+</mapper>

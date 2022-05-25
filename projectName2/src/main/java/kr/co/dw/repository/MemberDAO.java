@@ -10,5 +10,6 @@ public interface MemberDAO {
 	public MemberDTO read(String id);
 	public MemberDTO updateUI(String id);
 	public void update(MemberDTO dto);
+	public void delete(MemberDTO dto);
 
 }
