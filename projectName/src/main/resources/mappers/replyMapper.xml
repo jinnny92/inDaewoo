@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.reply">
+
+<update id="update">
+
+UPDATE tbl_re SET replyer = #{replyer}, replyText = #{replyText} WHERE rno = #{rno}
+
+</update>	
+	
+	
+	
+<delete id="delete">
+
+DELETE FROM tbl_re WHERE rno = #{rno}
+
+</delete>
+
+
+  <select id="list" resultType="ReplyDTO">
+  
+  SELECT * FROM tbl_re WHERE id =#{id} ORDER BY rno ASC
+  
+  </select>
+  
+  
+  
+  <insert id="insert">
+	
+	INSERT INTO tbl_re(rno, id, replyer, replyText)
+	VALUES(seq_re_rno.NEXTVAL, #{id}, #{replyer}, #{replyText})
+	
+	
+	
+	</insert>
+  
+</mapper>

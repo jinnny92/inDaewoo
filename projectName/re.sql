@@ -1,0 +1,19 @@
+
+CREATE table tbl_re(
+	rno NUMBER,
+	id VARCHAR2(6),
+	replyer VARCHAR2(15) NOT NULL,
+	replyText VARCHAR2(300) NOT NULL,
+	regDay DATE DEFAULT SYSDATE,
+	updateDay DATE DEFAULT SYSDATE, 
+	
+	CONSTRAINT pk_re_rno PRIMARY KEY(rno),
+	CONSTRAINT fk_re_id FOREIGN KEY(id) REFERENCES tbl_member(id)
+	
+)
+
+
+CREATE SEQUENCE seq_re_rno
+
+SELECT * FROM tbl_re
+ALTER TABLE tbl_re MODIFY id VARCHAR2(10);

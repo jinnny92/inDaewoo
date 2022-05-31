@@ -36,4 +36,6 @@
 		
 		<context:component-scan base-package="kr.co.repository"></context:component-scan>
 		<context:component-scan base-package="kr.co.dw.service"></context:component-scan>
+			<context:component-scan base-package="kr.co.dw.service.reply"></context:component-scan>
+		<context:component-scan base-package="kr.co.dw.repository.reply"></context:component-scan>
 </beans>

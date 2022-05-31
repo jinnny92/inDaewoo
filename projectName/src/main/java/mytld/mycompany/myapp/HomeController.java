@@ -42,10 +42,10 @@ public class HomeController {
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
 		
 		
-		list.add(new MemberDTO("m001", "1111", "kim", "2020-01-01"));
-		list.add(new MemberDTO("m002", "2222", "koo", "2021-02-02"));
-		list.add(new MemberDTO("m003", "3333", "lee", "2022-03-03"));
-		
+//		list.add(new MemberDTO("m001", "1111", "kim", "2020-01-01"));
+//		list.add(new MemberDTO("m002", "2222", "koo", "2021-02-02"));
+//		list.add(new MemberDTO("m003", "3333", "lee", "2022-03-03"));
+//		
 		
 		//System.out.println(list);
 		model.addAttribute("list", list);

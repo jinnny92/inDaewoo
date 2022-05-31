@@ -37,6 +37,10 @@
 	</div>
 
 </div>
+
+
+<jsp:forward page="/member/list"/>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#orgDiv").on("click", ".btn_del", function() {
