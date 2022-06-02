@@ -253,8 +253,13 @@
             }),
             dataType : 'text',
             success : function(result) {
-               alert(result);
-               getAllReply(bno, $("#replies"));
+            	if (result) {
+            		getAllReply(bno, $("#replies"));
+				}else{
+					alert("입력에 실패했습니다");
+				}
+               
+               
             }
             
          });
