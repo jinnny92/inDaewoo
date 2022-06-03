@@ -2,6 +2,67 @@
  * 
  */
  
+ 	function makeUploadItemTag(imgSrc, aHref, pText, btnDataFilename){
+		let str = `
+				<div class="filename">
+				<a href="${aHref}"><img src="${imgSrc}"></a>
+				<p>${pText}</p>
+				<button class = "btn_del_item" data-filename ="${btnDataFilename}">삭제</button>	
+				</div>
+		`;
+		
+		
+		
+	return str;
+}
+ 
+ 
+ 	
+ 
+ 	 function getOrgName(filename){
+			    let orgName = "";
+			    let idx = -1;
+			    
+			    if(isImg(filename)){
+			    	//인덱스가 14인 위치를 시작점으로 해서 "_"의 인덱스를 찾아라
+			    	//그리고 그 인덱스에서 +1을 해라 (원래 이름의 첫글자 인덱스 찾기)
+			       idx = filename.indexOf("_", 14) + 1;
+			       
+			    }else{
+			        idx = filename.indexOf("_") +1;
+			       
+			    }
+			    
+			    orgName = filename.substring(idx);
+			    return orgName;
+			    
+			 }
+
+			
+			function getImgFilePath(filename) {
+				let prefix = filename.substring(0, 12);
+				let suffix = filename.substring(14);
+				return prefix + suffix;
+			}
+			
+			
+			function isImg(filename) {
+				let idx = filename.lastIndexOf(".") + 1;
+				let formatName = filename.substring(idx).toLowerCase();
+				if (formatName == "png"|| formatName == "gif" || formatName == "jpg" || formatName == "jpeg") {
+					
+					return true;
+					
+				}else{
+					
+					return false;
+				}
+			}
+ 
+ 
+ 
+ 
+ 
  
  function getAllReply2(bno, el){
    $.getJSON("/replies/"+bno+"/all", function(result){

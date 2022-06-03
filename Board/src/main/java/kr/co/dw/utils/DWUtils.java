@@ -20,6 +20,39 @@ import org.springframework.util.FileCopyUtils;
 
 public class DWUtils {
 	
+	public static String getImgFilePath(String filename) {
+		String orgName = null;
+		String prefix = filename.substring(0, 12); // /2022/06/03/
+		String suffix = filename.substring(14); //uuid_oriname.png
+		
+		orgName = prefix + suffix;
+		
+		
+		return orgName;
+	}
+	
+	
+	public static void deleteFile(String uploadPath, String filename) {
+		
+		//filename이 폴더로 끝나면 해당 폴더가 삭제
+		//filename이 파일명으로 끝나면 해당 파일이 삭제
+		//filename을 보고 파일인지 폴더인지 어떻게 구분하나? 확장자가 있으면 파일, 없으면 폴더
+		
+		File deleteFile = new File(uploadPath, filename);
+		
+		if (deleteFile.exists()) {
+			deleteFile.delete();
+		}
+		if(isImgFile(filename)) {
+		String orgImgPath	= getImgFilePath(filename);
+		File deleteOrgImgFile = new File(uploadPath, orgImgPath);
+		if (deleteOrgImgFile.exists()) {
+			deleteOrgImgFile.delete();
+			}
+		} // 이미지 파일일때만 작업을 할 수 있게
+		
+	}
+	
 	public static MediaType getMediaType(String filename) { //utils 메서드는 static을 주로쓴다 이유는 사용하게 편리하기 위해 아니면 객체를 또 만들어줘야해서 귀찮아진다
 		Map<String, MediaType> map = new HashMap<String, MediaType>();
 		map.put("png", MediaType.IMAGE_PNG);
