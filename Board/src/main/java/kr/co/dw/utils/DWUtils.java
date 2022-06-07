@@ -125,7 +125,7 @@ ImageIO.read(new File(uploadPath+datePath, newFilename)); //이미지를 읽어�
 //램에다가 이 이미지를 축소해서 저장할 수 있는 공간을 만들자
 BufferedImage destImg = Scalr.resize(sourceImg, 
             Scalr.Method.AUTOMATIC, 
-            Scalr.Mode.AUTOMATIC,
+            Scalr.Mode.FIT_TO_HEIGHT,
             100); //파일에 들어갈 이미지는 여기에 있음
 
 //파일명과 확장자를 지정해주는 작업과 파일로 만드는 작업을 해줘야한다

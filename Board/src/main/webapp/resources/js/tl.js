@@ -1,14 +1,56 @@
 /**
  * 
  */
+  	function makeUploadItemTag2(filename){
+	
+		let imgSrc = '';
+						if (isImg(filename)) {
+							imgSrc = "/displayfile?filename=" + filename;
+						} else {
+							imgSrc = "/resources/img/일반파일.png";
+						}
+						
+						let aHref = '';
+						if (isImg(filename)) {
+							aHref = "/displayfile?filename=" + getImgFilePath(filename);
+						} else {
+							aHref = "/displayfile?filename=" + filename;
+						}
+						
+						let pText = getOrgName(filename);
+						let btnDataFilename = filename;
+	
+	
+	
+		let str = `<div class = "col mb-4">
+			<div class="card filename border-danger text-center" style="width: 18rem;">
+  <a href="${aHref}" target="_blank"><img src="${imgSrc}" class="" alt="업로드한 파일의 썸네일"></a>
+  <div class="card-body">
+    <p class="card-text">${pText}</p>
+    <a href="#" data-filename ="${btnDataFilename}" class="btn btn-danger btn_del_item">삭제</a>
+  </div>
+</div>
+</div>
+		`;
+		
+		
+		
+	return str;
+}
+ 
+ 
+ 
  
  	function makeUploadItemTag(imgSrc, aHref, pText, btnDataFilename){
-		let str = `
-				<div class="filename">
-				<a href="${aHref}"><img src="${imgSrc}"></a>
-				<p>${pText}</p>
-				<button class = "btn_del_item" data-filename ="${btnDataFilename}">삭제</button>	
-				</div>
+		let str = `<div class = "col mb-4">
+			<div class="card filename border-danger text-center" style="width: 18rem;">
+  <a href="${aHref}" target="_blank"><img src="${imgSrc}" class="" alt="업로드한 파일의 썸네일"></a>
+  <div class="card-body">
+    <p class="card-text">${pText}</p>
+    <a href="#" data-filename ="${btnDataFilename}" class="btn btn-danger btn_del_item">삭제</a>
+  </div>
+</div>
+</div>
 		`;
 		
 		

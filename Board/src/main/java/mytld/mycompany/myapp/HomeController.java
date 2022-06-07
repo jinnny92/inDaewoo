@@ -41,6 +41,50 @@ public class HomeController {
 	private String uploadPath = "C:" + File.separator + "upload";
 	
 	
+	   @RequestMapping(value = "/ajaxform", method = RequestMethod.POST, 
+			   produces = "text/plain;charset=UTF-8")
+	   public ResponseEntity<String> ajaxform(MultipartHttpServletRequest request, 
+	                                 Model model) throws Exception {
+	      
+	      ResponseEntity<String> entity = null;
+	      
+	      try {
+	         //여러 개의 파일이 업로드 되었을 때, 해당 파일들의 목록을 가져오는 코드
+	         List<MultipartFile> list = request.getFiles("file");
+	         
+	         // 여러 개의 파일들이 업로드 된 후 파일명을 저장할 리스트
+	         List<String> filenameList = new ArrayList<String>();
+	         
+	         // 업로드 된 여러 개의 파일들을 반복문을 이용해서 실제로 저장하게 하는 코드
+	         for(int i=0;i<list.size();i++) {
+	            // list에 들어 있는 MultipartFile 객체 하나씩 획득
+	            MultipartFile file = list.get(i);
+	            
+	            // multipartfile에 들어 있는 파일 데이터를 파일로 저장하는 코드
+	            String uploadedFilename = DWUtils.uploadFile(uploadPath, 
+	                  file.getOriginalFilename(), file.getBytes());
+	            
+	            // 여러 개의 업로드된 파일명을 저장하는 코드
+	            filenameList.add(uploadedFilename);
+	         }
+	         
+	         entity = new ResponseEntity<String>(filenameList.toString(), HttpStatus.OK);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         entity = new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+	      }
+	      
+	      return entity;
+	   }
+	
+	
+	@RequestMapping(value = "/ajaxform", method = RequestMethod.GET)
+	public String ajaxForm() {
+		
+		return "ajaxform";
+	}
+	
+	
 	@RequestMapping(value = "/deletefile", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String uploadedFilename){
 		ResponseEntity<String> entity = null;
