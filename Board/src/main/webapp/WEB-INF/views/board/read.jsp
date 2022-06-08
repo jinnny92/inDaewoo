@@ -144,18 +144,51 @@
 
 
 
-
-
-
-
-
+<div id="uploadedItems">
+</div>
 
 
 <script type="text/javascript" src="/resources/js/tl.js"></script>
 
 <script type="text/javascript">
    let bno = ${bDto.bno};
+   let filenameList = "${filenameList}";
+   let formData = new FormData();
+     
    
+   $("#uploadFile").on("dragenter dragover", function(event) {
+       event.preventDefault();
+    });
+   
+   $("#uploadFile").on("drop", function(event) {
+	event.preventDefault();
+	let files =   event.originalEvent.dataTransfer.files;
+   let file = files[0]; 
+   formData.append("file", file);  
+   
+   $.ajax({
+		        type : "post",
+		         url : "/board/insert",
+		          processData : false,  /* true가 되면 쿼리스트링형태로 주소창에 이 데이터가 딸려서 넘어가기때문에 false로 */ 
+		          contentType: false,
+		             data : formData,
+		             dataType : "text",
+		             success : function(bno){
+		            	 filename = bno; //나중엔 bno값을 넘겨주게 만들것이다
+		            	 bno = bno.substring(1, bno.length-1).trim();
+		                 
+		                 let str = makeUploadItemTag2(bno);
+		            	 
+		            	    $("#uploadedItems").append(str);
+		            	    
+		            	 location.assign("/board/read/"+bno);
+		                }
+
+		    });
+		 
+   });
+   
+		 
    
    $(function() {
       

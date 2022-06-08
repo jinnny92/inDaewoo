@@ -1,6 +1,7 @@
 package kr.co.dw.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class BoardDTO implements Serializable{
@@ -12,6 +13,7 @@ public class BoardDTO implements Serializable{
 	private String regDay;	
 	private String updateDay;
 	private int readCnt;
+	private List<String> filenameList;
 	
 	public BoardDTO() {
 		// TODO Auto-generated constructor stub
@@ -27,6 +29,33 @@ public class BoardDTO implements Serializable{
 		this.regDay = regDay;
 		this.updateDay = updateDay;
 		this.readCnt = readCnt;
+	}
+	
+	
+
+
+	public BoardDTO(int bno, String title, String content, String writer, String regDay, String updateDay, int readCnt,
+			List<String> filenameList) {
+		super();
+		this.bno = bno;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.regDay = regDay;
+		this.updateDay = updateDay;
+		this.readCnt = readCnt;
+		this.filenameList = filenameList;
+	}
+	
+	
+
+
+	public List<String> getFilenameList() {
+		return filenameList;
+	}
+
+	public void setFilenameList(List<String> filenameList) {
+		this.filenameList = filenameList;
 	}
 
 	public int getBno() {

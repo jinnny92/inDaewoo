@@ -46,6 +46,13 @@ public class HomeController {
 	   public ResponseEntity<String> ajaxform(MultipartHttpServletRequest request, 
 	                                 Model model) throws Exception {
 	      
+		   		String id = request.getParameter("id");
+		   		
+		   		System.out.println(id);
+		   		System.out.println("id를 데이터베이스에 저장함");
+		   		System.out.println("저장이 잘 됐으면, 아래의 파일 저장하는 코드 실행");
+		   		System.out.println("저장이 안 됐으면, 아래의 파일 저장하는 코드 미실행");
+		   
 	      ResponseEntity<String> entity = null;
 	      
 	      try {
