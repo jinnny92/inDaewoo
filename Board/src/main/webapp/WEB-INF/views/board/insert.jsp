@@ -55,7 +55,12 @@
   </div>
 </form>
 
-<div id="uploadFile"></div>
+<div class="form-group">
+	<div id="uploadFile" class="form-control text-center"></div>
+</div>
+
+<div id="uploadedItems" class="row row-cols-1 row-cols-lg-3">
+</div>
 
  <div class="form-group row">
     <input type="submit" class="form-control btn btn-danger col-sm-4 offset-sm-4" value="게시글 등록 완료" id="btn_submit">
@@ -63,24 +68,45 @@
   
   
   
-  
+  <script type="text/javascript" src="/resources/js/tl.js"></script>
   <script type="text/javascript">
    $(document).ready(function() {
-	   let formData = new FormData();
+	   let formData  = new FormData();
+
 	   
 	   $("#uploadFile").on("dragenter dragover", function(event) {
-	         event.preventDefault();
-	      });
-	   
-	   $("#uploadFile").on("drop", function(event) {
+
+		      event.preventDefault();
+		   });
+
+		   $("#uploadFile").on("drop", function(event) {
 		      event.preventDefault();
 		      
 		      let files = event.originalEvent.dataTransfer.files;
 		      
 		      let file = files[0];
 		      
+		      console.log(file["name"]);
+		      
 		      formData.append("file", file);
-		   });
+		      
+		      let reader = new FileReader();
+		      
+		      reader.readAsDataURL(file);
+		      
+		      reader.onload = function(event){
+		         
+		          let str  = test(event.target.result, file["name"]);
+		          
+		          $("#uploadedItems").append(str);
+
+		    	  
+			}
+		      
+		     
+		     
+				
+	   });
 
 	   
 	   
