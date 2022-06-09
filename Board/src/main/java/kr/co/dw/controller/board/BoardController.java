@@ -2,6 +2,7 @@ package kr.co.dw.controller.board;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,6 +37,27 @@ public class BoardController {
 	
 	
 	
+	
+	
+    @RequestMapping(value = "/{bno}/uploadall", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getAllUpload(@PathVariable("bno") int bno){
+       ResponseEntity<List<String>> entity = null;
+
+       try {
+		
+    	List<String> list  = uService.getAllUpload(bno);
+    	   entity = new ResponseEntity<List<String>>(list, HttpStatus.OK);
+    	   
+	} catch (Exception e) {
+		e.printStackTrace();
+		entity = new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);
+	}
+       
+       return entity;
+       
+    }
+    
+	
 	@RequestMapping(value = "/delete/{bno}", method = RequestMethod.POST)
 		public String delete(@PathVariable("bno") int bno) {
 		
@@ -44,15 +66,54 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-		public String update(BoardDTO bDto) {
-			bService.update(bDto);
-			
-			
-			
-		return "redirect:/board/read/" +bDto.getBno();
-	}
+	public String update(MultipartHttpServletRequest request) {
+		
+		String SBno  = request.getParameter("bno"); 
+		int bno = Integer.parseInt(SBno);
+		
+		String title =	request.getParameter("title");
+		
+		String writer =	request.getParameter("writer");
+		
+		String content = request.getParameter("content");
+		
+		String deleteFilenames = request.getParameter("deleteFilenameArr"); //하나의 문자열로 들어온 것이다 콤마를 이용하면 문자열배열을 만들 수 있다
+		
+		
+		
+		String[] arr = deleteFilenames.split(",");
+		
+		 
+		BoardDTO bDto = new BoardDTO(bno, title, content, writer, null, null, 0, null);
+		
+		System.out.println(bno);
+		System.out.println(title);
+		System.out.println(writer);
+		System.out.println(content);
+		System.out.println(deleteFilenames);
+		
+		
+		bService.update(bDto, arr);
+		
+		for (int i = 0; i < arr.length; i++) {//0보다 크다는 이야기는 삭제된 파일이 있다는 뜻이다
+			String deleteFilename  = arr[i];
+			DWUtils.deleteFile(uploadPath, deleteFilename);
+		}
+		
+		
+	return "redirect:/board/read/" +bno;
+}
+	
+	
+	/*
+	 * @RequestMapping(value = "/update", method = RequestMethod.POST) public String
+	 * update(BoardDTO bDto) { bService.update(bDto);
+	 * 
+	 * 
+	 * 
+	 * return "redirect:/board/read/" +bDto.getBno(); }
+	 */
 	
 	
 	@RequestMapping(value = "/update/{bno}", method = RequestMethod.GET)

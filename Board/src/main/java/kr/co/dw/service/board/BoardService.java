@@ -18,4 +18,6 @@ public interface BoardService {
 
 	void delete(int bno);
 
+	void update(BoardDTO bDto, String[] arr);
+
 }

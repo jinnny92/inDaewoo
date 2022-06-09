@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.dw.domain.BoardDTO;
 import kr.co.dw.repository.board.BoardDAO;
 import kr.co.dw.repository.reply.ReplyDAO;
+import kr.co.dw.repository.upload.UploadDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -18,6 +19,10 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private ReplyDAO rDao;
+	
+	
+	@Autowired
+	private UploadDAO uDao;
 	
 	@Transactional //세밀하게 작업하고 싶으면 메서드단에 @Transactional를 넣고 아니면 맨 위 서비스 쪽에 붙여도됨
 	@Override
@@ -79,6 +84,20 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		
 		bDao.insert(bDto);
+	}
+
+	@Override
+	@Transactional
+	public void update(BoardDTO bDto, String[] arr) {
+		// TODO Auto-generated method stub
+		update(bDto); //텍스트쪽에서 업데이트가 이루어졌고
+		
+		
+		for (int i = 0; i < arr.length; i++) {
+			String filename = arr[i];
+			uDao.deleteUpload(filename); //파일 이름이 들어갈건데 배열이니까 반복문을 이용해서 하나씩 하나씩
+		}
+		
 	}
 	
 

@@ -1,6 +1,76 @@
 /**
  * 
  */
+ 
+
+ 
+ function getAllUploadForUpdateUI(bno, uploadedItems){
+	$.getJSON("/board/"+bno+"/uploadall", function(data){
+		uploadedItems.html("");
+     for(let i = 0; i < data.length; i++){
+			let filename = data[i];
+			let str	=	makeUploadItemTag2(filename);
+			uploadedItems.append(str);
+			
+		}
+      
+   }); 
+	
+	
+}
+ 
+ 
+function getAllUpload(bno, uploadedItems){
+   $.getJSON("/board/"+bno+"/uploadall", function(data){
+     for(let i = 0; i < data.length; i++){
+			let filename = data[i];
+			let str	=	makeUploadItemTagForRead(filename);
+			uploadedItems.append(str);
+			
+		}
+      
+   }); 
+}
+ 
+ 
+ function makeUploadItemTagForRead(filename){
+	
+		let imgSrc = '';
+						if (isImg(filename)) {
+							imgSrc = "/displayfile?filename=" + filename;
+						} else {
+							imgSrc = "/resources/img/일반파일.png";
+						}
+						
+						let aHref = '';
+						if (isImg(filename)) {
+							aHref = "/displayfile?filename=" + getImgFilePath(filename);
+						} else {
+							aHref = "/displayfile?filename=" + filename;
+						}
+						
+						let pText = getOrgName(filename);
+						let btnDataFilename = filename;
+	
+	
+	
+		let str = `<div class = "col mb-4">
+			<div class="card filename border-danger text-center" style="width: 18rem;">
+  <a href="${aHref}" target="_blank"><img src="${imgSrc}" class="" alt="업로드한 파일의 썸네일"></a>
+  <div class="card-body">
+    <p class="card-text">${pText}</p>
+  </div>
+</div>
+</div>
+		`;
+		
+		
+		
+	return str;
+}
+ 
+ 
+ 
   	function makeUploadItemTag2(filename){
 	
 		let imgSrc = '';

@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 
 public class DWUtils {
@@ -43,6 +44,15 @@ public class DWUtils {
 		if (deleteFile.exists()) {
 			deleteFile.delete();
 		}
+		
+		try {
+			Thread.sleep(20); //안정적으로 삭제시키기 위해 딜레이를 주자
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
 		if(isImgFile(filename)) {
 		String orgImgPath	= getImgFilePath(filename);
 		File deleteOrgImgFile = new File(uploadPath, orgImgPath);
