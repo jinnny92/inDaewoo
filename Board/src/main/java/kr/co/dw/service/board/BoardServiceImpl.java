@@ -79,11 +79,21 @@ public class BoardServiceImpl implements BoardService{
 		return bDao.list();
 	}
 	
+	@Transactional
 	@Override
 	public void insert(BoardDTO bDto) {
 		// TODO Auto-generated method stub
 		
 		bDao.insert(bDto);
+		
+		int bno = bDto.getBno();
+		List<String> list = bDto.getFilenameList();
+		
+		for (int i = 0; i < list.size(); i++) {
+			String filename = list.get(i);
+			uDao.insert(filename, bno);
+		}
+		
 	}
 
 	@Override
@@ -98,6 +108,20 @@ public class BoardServiceImpl implements BoardService{
 			uDao.deleteUpload(filename); //파일 이름이 들어갈건데 배열이니까 반복문을 이용해서 하나씩 하나씩
 		}
 		
+	}
+
+	@Override
+	@Transactional
+	public void update(BoardDTO bDto, String[] arr, List<String> fileList) {
+		// TODO Auto-generated method stub
+		
+		update(bDto, arr);
+		
+		for (int i = 0; i < fileList.size(); i++) {
+			String filename = fileList.get(i);
+			uDao.insert(filename, bDto.getBno());
+		}
+
 	}
 	
 

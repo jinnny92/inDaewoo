@@ -11,6 +11,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+
+<style type="text/css">
+ #uploadFile{
+       width: 100%;
+       height : 250px;
+       border : 1px solid red;
+       
+ }
+</style>
+
 </head>
 <body>
 
@@ -47,6 +57,11 @@
 </form>
 
 
+<div class="form-group">
+   <div id="uploadFile" class="form-control text-center"></div>
+</div>
+
+
 <div id="uploadedItems" class="row row-cols-1 row-cols-3">
 </div>
 
@@ -57,10 +72,18 @@
 <script type="text/javascript" src="/resources/js/tl.js"></script>
 <script type="text/javascript">
 
+	
+
  	$(function() {
  		let bno = ${bDto.bno};
  		
  		let formData = new FormData();
+ 		
+ 		let idx = 0;
+ 		
+ 		/* ++idx는 곧바로 1이 증가되어 idx에 입력됨
+ 		idx++은 다음에 idx를 만나면 그때 1이 증가되어 idx에 입력됨 */
+ 		
  		
  		let deleteFilenameArr = []; //삭제버튼을 누르면 화면상에선 삭제가 되지만 DB에서는 수정완료 버튼을 누를때까지 살아있다
  		
@@ -68,12 +91,52 @@
 
  		
  		getAllUploadForUpdateUI(bno, $("#uploadedItems"));
- 	
+ 		
+ 	   $("#uploadFile").on("dragenter dragover", function(event) {
+
+		      event.preventDefault();
+		   });
+
+		   $("#uploadFile").on("drop", function(event) {
+		      event.preventDefault();
+		      
+		      let files = event.originalEvent.dataTransfer.files;
+		      
+		      let file = files[0];
+		      
+		      
+		      formData.append("file" + idx, file);
+		      
+		      let reader = new FileReader();
+		      
+		      reader.readAsDataURL(file);
+		      
+		      reader.onload = function(event){
+		         
+		          let str  = test2(event.target.result, file["name"], "file"+ idx++);
+		          
+		          $("#uploadedItems").append(str);
+
+		    	  
+			}
+		      
+				
+	   });
+
  	
  		$("#uploadedItems").on("click", ".btn_del_item", function() {
 			let filename =	$(this).attr("data-filename");
-			deleteFilenameArr.push(filename);//	deleteFilenameArr.push(filename); 이런식으로 사용하면된다
-			console.log(deleteFilenameArr);
+			
+			if (filename == "new") { //update.jsp에서 추가된 애냐?고 물어보는거
+					let filekey =	$(this).attr("data-filekey"); //화면에선 삭제가 되지만 formData에선 삭제안됨
+					formData.delete(filekey);
+			}else {
+				deleteFilenameArr.push(filename);//	deleteFilenameArr.push(filename); 이런식으로 사용하면된다
+				
+			}
+			
+			
+			
  			$(this).parent().parent().parent().remove(); //div속에 div속에 div를 삭제 하기 위해서  parent()를 세번 썼다 (div)로 몇 번 감싸고 있는지 확인할것
  		});
  	

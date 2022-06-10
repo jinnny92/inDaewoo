@@ -20,4 +20,6 @@ public interface BoardService {
 
 	void update(BoardDTO bDto, String[] arr);
 
+	void update(BoardDTO bDto, String[] arr, List<String> fileList);
+
 }

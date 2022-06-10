@@ -2,6 +2,39 @@
  * 
  */
  
+ 
+
+ 
+
+ 
+ function test2(result, filename, filekey) {
+	if(!isImg(filename)){
+		result = "/resources/img/일반파일.png";
+	}
+	
+	
+   let str = `
+   <div class="col mb-4">
+   <div class="card filename border-primary text-center">
+   <div>
+      <img src="${result}" alt="업로드한 파일의 썸네일" width="100px" height="100px">
+      </div>
+      <div class="card-body">
+          <p class="card-text">${filename}</p>
+           <a href="#" data-filekey = "${filekey}" data-filename="new" class="btn btn-danger btn_del_item">삭제</a> 
+      </div>
+   </div>
+</div>
+
+   `;
+
+   return str;
+
+}
+
+
+
+ 
 function test(result, filename) {
 	if(!isImg(filename)){
 		result = "/resources/img/일반파일.png";
