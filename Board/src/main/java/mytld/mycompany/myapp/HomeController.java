@@ -40,6 +40,12 @@ public class HomeController {
 	
 	private String uploadPath = "C:" + File.separator + "upload";
 	
+	@RequestMapping(value = "/test11", method = RequestMethod.GET)
+	public String test11() {
+		
+		return "test11";
+	}
+	
 	
 	   @RequestMapping(value = "/ajaxform", method = RequestMethod.POST, 
 			   produces = "text/plain;charset=UTF-8")

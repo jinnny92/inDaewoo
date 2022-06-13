@@ -22,4 +22,6 @@ public interface BoardService {
 
 	void update(BoardDTO bDto, String[] arr, List<String> fileList);
 
+	BoardDTO read(int bno, String ip);
+
 }

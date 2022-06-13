@@ -158,13 +158,15 @@
 		 
    
    $(function() {
+	   /* tl.js에 있는 함수, 업로드 한 파일들의 파일명을 DB에서 가져와서 이미지 파일이면 해당 썸네일을 화면에 표기, 일반 파일이면 우리가 만들어 놓은 일반파일.png를 썸네일로 표기하도록 한 함수 */
+	   
+	   getAllUpload(bno, $("#uploadedItems")); 
 	   
 	   
-	   getAllUpload(bno, $("#uploadedItems"));
-	   
-	   
-      
+      /* 댓글 수정 완료 버튼을 눌렀을 때 실행되는 코드  */
       $("#item_btn_update_submit").click(function() {
+    	  /* 아이디가 item_btn_update_submit인 인풋태그의 value값을 가져와서 replyer라는 변수에 대입 */
+    	  
          let replyer = $("#item_input_update_replyer").val();
          let replyText = $("#item_input_update_replyText").val();
      	 let rno =  $("#modal_rno").text();
@@ -199,7 +201,7 @@
       
       
       $("#replies").on("click", ".item_btn_update", function() {
-         $("#myModal").modal("show");
+         $("#myModal").modal("show"); 
          
          let replyer = $(this).prev().prev().text();
          let replyText = $(this).prev().text();

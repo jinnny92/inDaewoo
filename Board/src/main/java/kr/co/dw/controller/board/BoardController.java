@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -226,8 +227,9 @@ public class BoardController {
 	
 	
 	@RequestMapping(value = "/read/{bno}", method = RequestMethod.GET)
-		public String read(@PathVariable("bno") int bno, Model model) {
-		BoardDTO bDto = bService.read(bno);
+		public String read(@PathVariable("bno") int bno, Model model, HttpServletRequest request) {
+		String ip = request.getRemoteAddr();
+		BoardDTO bDto = bService.read(bno, ip);
 		model.addAttribute("bDto", bDto);
 		
 		

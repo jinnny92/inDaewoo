@@ -15,6 +15,9 @@
 </head>
 <body>
 
+
+
+
 <jsp:include page="../common/header.jsp"/>
 
 <a class="btn btn-primary" href="/board/insert">글쓰기</a>
