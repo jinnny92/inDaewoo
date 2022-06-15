@@ -20,7 +20,13 @@
 
 <jsp:include page="../common/header.jsp"/>
 
+
+${login.id}<br>
+
+
 <a class="btn btn-primary" href="/board/insert">글쓰기</a>
+
+
 
 <div class="jumbotron">
 <h1 class="text-center">게시글목록</h1>

@@ -266,6 +266,7 @@ function makeItemTag(item){
   <div class="card-body">
     <h5 class="card-title">${item.replyer}</h5>
     <p class="card-text">${item.replyText}</p>
+    
     <a data-rno="${item.rno}" href="#" class="btn btn-primary item_btn_update">수정</a>
     <a data-rno="${item.rno}" href="#" class="btn btn-primary item_btn_delete">삭제</a>
   </div>

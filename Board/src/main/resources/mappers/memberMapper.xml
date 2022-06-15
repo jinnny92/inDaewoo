@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dw.member">
 
+	<select id="login" resultType="MemberDTO">
+	SELECT * FROM tbl_member WHERE id = #{id} AND pw = #{pw}
+	</select>
+
+
+
 	<delete id="delete">
 	
 	DELETE FROM tbl_member WHERE id = #{id} AND pw = #{pw}
