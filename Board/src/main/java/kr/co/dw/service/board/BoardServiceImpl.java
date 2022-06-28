@@ -1,12 +1,15 @@
 package kr.co.dw.service.board;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.dw.domain.BoardDTO;
+import kr.co.dw.domain.PageTO;
 import kr.co.dw.repository.board.BoardDAO;
 import kr.co.dw.repository.readcnt.ReadCntDao;
 import kr.co.dw.repository.reply.ReplyDAO;
@@ -149,6 +152,72 @@ public class BoardServiceImpl implements BoardService{
 		 
 		return bDao.read(bno); //이게 더 간지난다
 	}
+
+	@Override
+	public PageTO<BoardDTO> list(Integer curpage) {
+		// TODO Auto-generated method stub
+		
+		//DAO가 아니라 서비스쪽에서 작업을 해줘야함
+		
+		
+		PageTO<BoardDTO> pt = new PageTO<BoardDTO>(curpage);
+		
+		Integer amount = bDao.getAmountBoard();
+			
+		pt.setAmount(amount);
+		
+		List<BoardDTO> list =  bDao.list(pt);
+		
+		pt.setList(list);
+		
+		return pt;
+	}
+
+	@Override
+	public List<BoardDTO> search(PageTO<BoardDTO> pt, String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		
+		int amount = getAmountSearch(criteria, keyword);
+	
+		pt.setAmount(amount);
+		
+		return bDao.list(pt);
+		
+	}
+
+	@Override
+	public Integer getAmountSearch(String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("criteria", criteria);
+		map.put("keyword", keyword);
+		
+		
+		return bDao.getAmountSearch(criteria, keyword);
+	}
+
+	@Override
+	public PageTO<BoardDTO> search(Integer curpage, String criteria, String keyword) {
+		// TODO Auto-generated method stub
+		
+		PageTO<BoardDTO> pt = new PageTO<BoardDTO>(curpage);
+		
+		Integer amount = bDao.getAmountSearch(criteria, keyword);
+		
+		if (amount == null) {
+			amount = 0;
+		}
+		
+		
+		pt.setAmount(amount);
+		
+		
+		List<BoardDTO>	list =	bDao.search(pt, criteria, keyword);
+		pt.setList(list);
+		return pt;
+	}
+
 	
 
 }

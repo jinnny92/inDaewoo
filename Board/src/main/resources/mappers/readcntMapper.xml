@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dw.readcnt">
+
+<insert id="insert">
+	INSERT INTO tbl_readcnt (ip, bno) VALUES (#{ip}, #{bno})
+</insert>	
+	
+	
+  <select id="read" resultType="string">
+  	SELECT ip FROM tbl_readcnt WHERE ip = #{ip} AND bno = #{bno}
+  </select>
+  
+</mapper>

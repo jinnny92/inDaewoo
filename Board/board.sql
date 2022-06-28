@@ -11,4 +11,4 @@ CREATE table tbl_board(
 
 CREATE SEQUENCE seq_board_bno;
 
-SELECT * FROM tbl_board;
+SELECT * FROM tbl_board where writer like '%새로이%';

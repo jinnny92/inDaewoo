@@ -77,7 +77,7 @@
 
 <a class="btn btn-warning" href="/board/update/${bDto.bno}">수정</a> 
 <a class="btn btn-danger delete" href="#">삭제</a> 
-<a class="btn btn-info" href="/board/list">목록</a> 
+<a class="btn btn-info goback" href="#">목록</a> 
 <a class="btn btn-success reply">댓글</a>
 <br>
 <br>
@@ -161,6 +161,11 @@
 	   /* tl.js에 있는 함수, 업로드 한 파일들의 파일명을 DB에서 가져와서 이미지 파일이면 해당 썸네일을 화면에 표기, 일반 파일이면 우리가 만들어 놓은 일반파일.png를 썸네일로 표기하도록 한 함수 */
 	   
 	   getAllUpload(bno, $("#uploadedItems")); 
+	   
+	   
+	   $(".goback").click(function() {
+			history.go(-1);
+	});
 	   
 	   
       /* 댓글 수정 완료 버튼을 눌렀을 때 실행되는 코드  */

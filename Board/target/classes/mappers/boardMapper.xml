@@ -5,6 +5,44 @@
 	<mapper namespace="kr.co.dw.board">
 	
 	
+   <sql id="sql_where_part">
+      <if test="criteria != null">
+         <if test="criteria == 'writer'.toString()">
+            WHERE UPPER(writer) LIKE '%'||UPPER(#{keyword})||'%'
+         </if>
+         
+         <if test="criteria == 'title'.toString()">
+            WHERE UPPER(title) LIKE '%'||UPPER(#{keyword})||'%'
+         </if>
+         
+         <if test="criteria == 'content'.toString()">
+            WHERE LOWER(content) LIKE  '%'||LOWER(#{keyword})||'%'
+         </if>
+      </if>
+   </sql>
+	
+	
+	<select id="search" resultType="BoardDTO">
+      SELECT * FROM tbl_board <!-- UPPER(writer) LIKE '%'||UPPER(#{keyword})||'%' 
+      OR UPPER(title) LIKE '%'||UPPER(#{keyword})||'%' 
+      OR LOWER(content) LIKE  '%'||LOWER(#{keyword})||'%' -->
+      <include refid="sql_where_part"></include> 
+      <!-- refid : 레퍼런스 아이디 -->
+      ORDER BY bno DESC
+   </select>
+
+   <select id="getAmountSearch" resultType="integer">
+      SELECT COUNT(bno) FROM tbl_board 
+      <include refid="sql_where_part"></include>
+   </select>
+	
+	
+	<select id="getAmountBoard" resultType="integer">
+	
+		SELECT COUNT(bno) FROM tbl_board
+	
+	</select>
+	
 	<update id="increaseReadCnt">
 	
 	UPDATE tbl_board SET readCnt = readCnt + 1 WHERE bno = #{bno}

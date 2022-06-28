@@ -2,12 +2,22 @@ package kr.co.dw.controller.board;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.dw.domain.BoardDTO;
+import kr.co.dw.domain.PageTO;
 import kr.co.dw.service.board.BoardService;
 import kr.co.dw.service.upload.UploadService;
 import kr.co.dw.utils.DWUtils;
@@ -40,6 +51,94 @@ public class BoardController {
 	private String uploadPath = "C:" + File.separator + "upload";
 	
 	
+	
+	//비밀번호 인증용 외부 클래스
+	 public class UserAuthentication extends Authenticator{
+	      private PasswordAuthentication pwa;
+	      
+	      public UserAuthentication(String id, String pw) {
+	         pwa = new PasswordAuthentication(id, pw);
+	      }
+	      
+	      @Override
+	      public PasswordAuthentication getPasswordAuthentication() {
+	         // TODO Auto-generated method stub
+	         return pwa;
+	      }
+	      
+	   }
+	
+	
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+		public void send(String from, String to, 
+				String title, String content, String pw) {
+		
+		Properties props = System.getProperties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.naver.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "587");
+		
+		Authenticator auth = new UserAuthentication(from, pw);
+		
+		Session session = Session.getDefaultInstance(props, auth);
+		
+		
+		//실제로 메일을 전달할 수 있는 객체 만들기
+		MimeMessage mMsg = new MimeMessage(session);
+		
+		try {
+			mMsg.setSentDate(new Date());
+			
+			InternetAddress fromId = new InternetAddress(from);
+			mMsg.setFrom(fromId);
+			
+			
+			InternetAddress toId = new InternetAddress(to);
+			Address[] arr = {toId};
+		
+			mMsg.setRecipients(Message.RecipientType.TO,arr);//setTo가 없다
+			mMsg.setSubject(title, "UTF-8");
+			mMsg.setText(content, "UTF-8");
+			mMsg.setHeader("content-Type", "text/html");
+			
+			Transport.send(mMsg, mMsg.getAllRecipients());
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+   @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
+   public void sendMail() {
+      
+   }
+	
+	
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+		public void search(Integer curpage, String criteria, String keyword, Model model) {
+		
+		if (curpage == null) {
+			curpage = 1;
+		}
+		
+		PageTO<BoardDTO> pt	=	bService.search(curpage, criteria, keyword);
+		//서치로 페이징처리 한다고 하면 PageTO가 나와야함
+		
+		model.addAttribute("list", pt.getList());
+		model.addAttribute("pt", pt);
+		model.addAttribute("criteria", criteria);
+		model.addAttribute("keyword", keyword);
+	}
 	
 	
 	
@@ -260,9 +359,20 @@ public class BoardController {
 	
 	
 	@RequestMapping( value = "/list", method = RequestMethod.GET)
-	public String list(Model model) {
-		List<BoardDTO> list = bService.list();
-		model.addAttribute("list", list);
+	public String list(Integer curpage, Model model) {
+		
+		if (curpage == null) { // http://localhost:8900/board/list 일 때 curpage는 1이다
+			curpage = 1;
+		}
+		
+//		List<BoardDTO> list = bService.list();
+		
+		
+		
+		PageTO<BoardDTO> pt = bService.list(curpage);
+		
+		model.addAttribute("list", pt.getList());
+		model.addAttribute("pt", pt);
 		
 		return "/board/list";
 	}

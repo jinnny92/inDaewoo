@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class MemberDTO implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String pw;
@@ -74,8 +75,7 @@ public class MemberDTO implements Serializable{
 		MemberDTO other = (MemberDTO) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "MemberDTO [id=" + id + ", name=" + name + ", birth=" + birth + "]";

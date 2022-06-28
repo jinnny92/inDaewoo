@@ -55,9 +55,74 @@ ${login.id}<br>
 </table>
 
 
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="/board/list?curpage=${pt.curPage <= 1? 1: pt.curPage-1}">Previous</a>
+    </li>
+    
+    <c:forEach begin="${pt.beginPageNum}" end="${pt.finishPageNum}" var="page">
+    	<c:if test="${page == pt.curPage}">
+    		 <li class="page-item active" aria-current="page">
+      			<a class="page-link" href="/board/list?curpage=${pt.curPage}">${page}</a>
+    		</li>
+    	</c:if>
+    	
+    	<c:if test="${page != pt.curPage}">
+    		  <li class="page-item">
+    		  <a class="page-link" href="/board/list?curpage=${page}">${page}</a></li>
+    	</c:if>
+    	
+    </c:forEach>
+    
+    
+    
+    <li class="page-item">
+      <a class="page-link" href="/board/list?curpage=${pt.curPage >= pt.totalPage? pt.totalPage : pt.curPage+1}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+<form action="/board/search" method="get" target="blank">
+
+<div class="input-group mb-3">
+	<select name="criteria" class="form-control col-sm-2">
+		<option selected>검색 조건</option>
+		<option value="writer">작성자</option>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+	
+	</select>
+
+
+  <input class="form-control" name="keyword">
+  <div class="input-group-append">
+    <button class="btn btn-info" type="submit" >검색</button>
+  </div>
+</div>
 
 
 
+</form>
+
+
+
+	<%-- <a href = "/board/list?curPage=${pt.curPage > 1 ? pt.curPage+1:1}">&laquo;</a>
+
+	<c:forEach var = "i" begin="${pt.beginPageNum}" end = "${pt.finishPageNum}">
+	<a href = "/board/list?curPage=${i}" class ="${i == pt.curPage?'red':''}">
+
+	${i}
+
+
+
+	</a> &nbsp;&nbsp;
+
+	</c:forEach>
+	<a href = "/board/list?curPage=${pt.curPage < pt.totalPage ? pt.curPage-1:pt.totalPage}">&raquo;</a>
+
+
+ --%>
 
 <script type="text/javascript">
 	$(document).ready(function() {

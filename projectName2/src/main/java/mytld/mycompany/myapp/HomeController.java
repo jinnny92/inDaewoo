@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.dw.domain.MemberDTO;
+
 import kr.co.dw.utils.DWUtils;
 
 /**
@@ -26,12 +26,12 @@ import kr.co.dw.utils.DWUtils;
 public class HomeController {
 	
 	
-	@RequestMapping(value = "/jsontest", method = RequestMethod.GET)
-	@ResponseBody
-		public  MemberDTO jsonTest() {
-		return new MemberDTO("m001", "111", "kim", "2022-01-01");
-	}
-	
+	/*
+	 * @RequestMapping(value = "/jsontest", method = RequestMethod.GET)
+	 * 
+	 * @ResponseBody public MemberDTO jsonTest() { return new MemberDTO("m001",
+	 * "111", "kim", "2022-01-01"); }
+	 */
 	
 	@RequestMapping(value = "/makefolder", method = RequestMethod.GET)
 	public String makefolder() {

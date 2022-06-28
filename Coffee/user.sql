@@ -1,0 +1,22 @@
+CREATE TABLE tbl_user(
+	userId VARCHAR2(15),
+	uName VARCHAR2(15) NOT NULL,
+	uNickname VARCHAR2(20) UNIQUE NOT NULL,
+	uPassword VARCHAR2(30) NOT NULL,
+	uBirth DATE,
+	uPostnumber NUMBER NOT NULL,
+	uAddress VARCHAR2(200) NOT NULL,
+	udetailAddress VARCHAR2(100) NOT NULL,
+	uPhone VARCHAR2(15) UNIQUE NOT NULL,
+	uEmail VARCHAR2(50) UNIQUE NOT NULL,
+	uGrade VARCHAR2(15),
+	uSigndate DATE DEFAULT SYSDATE,
+	uPoint VARCHAR2(10),
+
+	CONSTRAINT pk_user_userId PRIMARY KEY(userId)
+)
+
+
+
+DROP TABLE tbl_user
+
